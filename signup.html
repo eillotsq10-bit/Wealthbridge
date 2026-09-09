@@ -15,115 +15,338 @@
 
     body {
       min-height: 100vh;
-      background: linear-gradient(135deg, #050505, #160b2b, #050505);
+      background: linear-gradient(
+        135deg,
+        #020403,
+        #052e16,
+        #064e3b,
+        #020403
+      );
       color: white;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Green background */
+    .background {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(34, 197, 94, 0.35),
+        rgba(6, 78, 59, 0.45),
+        #020403
+      );
+      z-index: -5;
+    }
+
+    /* Top green glow */
+    .glow-top {
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 500px;
+      background: rgba(34, 197, 94, 0.22);
+      filter: blur(90px);
+      border-radius: 50%;
+      z-index: -4;
+      animation: pulse 7s infinite alternate;
+    }
+
+    /* Bottom green glow */
+    .glow-bottom {
+      position: fixed;
+      bottom: -250px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 500px;
+      background: rgba(16, 185, 129, 0.20);
+      filter: blur(90px);
+      border-radius: 50%;
+      z-index: -4;
+      animation: pulse 6s infinite alternate;
+    }
+
+    @keyframes pulse {
+      from {
+        transform: translateX(-50%) scale(0.95);
+        opacity: 0.4;
+      }
+
+      to {
+        transform: translateX(-50%) scale(1.1);
+        opacity: 0.8;
+      }
     }
 
     .container {
       width: 100%;
       max-width: 430px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 20px;
-      padding: 30px;
-      backdrop-filter: blur(15px);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+
+      background: rgba(0, 0, 0, 0.58);
+
+      border: 1px solid rgba(255, 255, 255, 0.12);
+
+      border-radius: 22px;
+
+      padding: 35px 28px;
+
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+
+      box-shadow:
+        0 0 40px rgba(34, 197, 94, 0.15),
+        0 25px 60px rgba(0, 0, 0, 0.6);
+
+      position: relative;
+      overflow: hidden;
+
+      animation: fadeIn 0.8s ease;
+    }
+
+    /* Animated green line */
+    .container::before {
+      content: "";
+      position: absolute;
+
+      width: 200%;
+      height: 3px;
+
+      top: 0;
+      left: -100%;
+
+      background: linear-gradient(
+        90deg,
+        transparent,
+        #86efac,
+        transparent
+      );
+
+      animation: moveLight 4s linear infinite;
+
+      opacity: 0.8;
+    }
+
+    @keyframes moveLight {
+      from {
+        left: -100%;
+      }
+
+      to {
+        left: 100%;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .logo {
       width: 60px;
       height: 60px;
-      margin: 0 auto 20px;
+
+      margin: 0 auto 18px;
+
       border-radius: 50%;
-      background: linear-gradient(135deg, #8b5cf6, #6366f1);
+
+      background: linear-gradient(
+        135deg,
+        #22c55e,
+        #15803d
+      );
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       font-size: 28px;
       font-weight: bold;
+
+      border: 1px solid rgba(255,255,255,0.2);
+
+      box-shadow:
+        0 0 25px rgba(34, 197, 94, 0.35);
     }
 
     h1 {
       text-align: center;
       margin-bottom: 8px;
+      font-size: 27px;
     }
 
     .subtitle {
       text-align: center;
-      color: #bdbdbd;
-      margin-bottom: 25px;
+      color: rgba(255,255,255,0.55);
+      font-size: 14px;
+      margin-bottom: 28px;
     }
 
     label {
       display: block;
       margin-bottom: 8px;
-      font-size: 14px;
+
+      font-size: 13px;
+
+      color: rgba(255,255,255,0.75);
     }
 
     input {
       width: 100%;
-      padding: 13px;
+
+      height: 48px;
+
+      padding: 0 16px;
+
       margin-bottom: 18px;
-      border: 1px solid #444;
+
+      border: 1px solid rgba(255,255,255,0.1);
+
       border-radius: 10px;
-      background: rgba(0, 0, 0, 0.35);
+
+      background: rgba(255,255,255,0.07);
+
       color: white;
+
       outline: none;
+
+      font-size: 15px;
+
+      transition: 0.3s;
+    }
+
+    input::placeholder {
+      color: rgba(255,255,255,0.35);
     }
 
     input:focus {
-      border-color: #8b5cf6;
+      border-color: rgba(74, 222, 128, 0.65);
+
+      background: rgba(255,255,255,0.11);
+
+      box-shadow:
+        0 0 0 3px rgba(34,197,94,0.12);
     }
 
     .button {
       width: 100%;
-      padding: 14px;
+
+      height: 50px;
+
       border: none;
+
       border-radius: 10px;
-      background: linear-gradient(135deg, #8b5cf6, #6366f1);
+
+      background: linear-gradient(
+        135deg,
+        #22c55e,
+        #15803d
+      );
+
       color: white;
+
       font-size: 16px;
+
       font-weight: bold;
+
       cursor: pointer;
+
+      transition: 0.3s;
+
+      box-shadow:
+        0 10px 30px rgba(34, 197, 94, 0.25);
     }
 
     .button:hover {
-      opacity: 0.9;
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 15px 35px rgba(34, 197, 94, 0.4);
     }
 
     .login {
       text-align: center;
+
       margin-top: 22px;
-      color: #aaa;
+
+      color: rgba(255,255,255,0.55);
+
+      font-size: 14px;
     }
 
     .login a {
-      color: #a78bfa;
+      color: #86efac;
+
       text-decoration: none;
+    }
+
+    .login a:hover {
+      color: #bbf7d0;
     }
 
     .home {
       display: block;
+
       text-align: center;
-      margin-top: 18px;
-      color: #aaa;
+
+      margin-top: 20px;
+
+      color: rgba(255,255,255,0.5);
+
       text-decoration: none;
+
       font-size: 14px;
+    }
+
+    .home:hover {
+      color: white;
+    }
+
+    @media (max-width: 480px) {
+
+      .container {
+        padding: 30px 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
     }
   </style>
 </head>
 
 <body>
 
+  <div class="background"></div>
+
+  <div class="glow-top"></div>
+
+  <div class="glow-bottom"></div>
+
   <div class="container">
 
-    <div class="logo">W</div>
+    <div class="logo">
+      W
+    </div>
 
-    <h1>Create Account</h1>
+    <h1>
+      Create Account
+    </h1>
 
     <p class="subtitle">
       Join WealthBridge
@@ -131,7 +354,9 @@
 
     <form onsubmit="createAccount(event)">
 
-      <label for="name">Full Name</label>
+      <label for="name">
+        Full Name
+      </label>
 
       <input
         type="text"
@@ -140,7 +365,9 @@
         required
       >
 
-      <label for="email">Email Address</label>
+      <label for="email">
+        Email Address
+      </label>
 
       <input
         type="email"
@@ -149,7 +376,9 @@
         required
       >
 
-      <label for="password">Password</label>
+      <label for="password">
+        Password
+      </label>
 
       <input
         type="password"
@@ -158,7 +387,9 @@
         required
       >
 
-      <label for="confirm">Confirm Password</label>
+      <label for="confirm">
+        Confirm Password
+      </label>
 
       <input
         type="password"
@@ -167,7 +398,10 @@
         required
       >
 
-      <button class="button" type="submit">
+      <button
+        class="button"
+        type="submit"
+      >
         Create Account
       </button>
 
@@ -175,29 +409,45 @@
 
     <p class="login">
       Already have an account?
-      <a href="login.html">Sign In</a>
+      <a href="./login.html">
+        Sign In
+      </a>
     </p>
 
-    <a class="home" href="index.html">
+    <a
+      class="home"
+      href="./index.html"
+    >
       ← Back to Home
     </a>
 
   </div>
 
   <script>
+
     function createAccount(event) {
+
       event.preventDefault();
 
-      const password = document.getElementById("password").value;
-      const confirm = document.getElementById("confirm").value;
+      const password =
+        document.getElementById("password").value;
+
+      const confirm =
+        document.getElementById("confirm").value;
 
       if (password !== confirm) {
+
         alert("Passwords do not match.");
+
         return;
       }
 
-      alert("Account creation will be connected when the secure backend is added.");
+      alert(
+        "Account creation will be connected when the secure backend is added."
+      );
+
     }
+
   </script>
 
 </body>
