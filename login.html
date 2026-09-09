@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - WealthBridge</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #f5f7fb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 420px;
+      background: white;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      color: #14532d;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #6b7280;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #14532d;
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      background: #14532d;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .login-button:hover {
+      background: #166534;
+    }
+
+    .links {
+      text-align: center;
+      margin-top: 22px;
+    }
+
+    .links a {
+      color: #14532d;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 25px;
+      color: #6b7280;
+      text-decoration: none;
+    }
+
+    .notice {
+      margin-top: 20px;
+      padding: 12px;
+      background: #f3f4f6;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #4b5563;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-box">
+
+    <div class="logo">WealthBridge</div>
+
+    <p class="subtitle">Sign in to your account</p>
+
+    <form onsubmit="return demoLogin()">
+
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        placeholder="Enter your email"
+        required
+      >
+
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        placeholder="Enter your password"
+        required
+      >
+
+      <button type="submit" class="login-button">
+        Sign In
+      </button>
+
+    </form>
+
+    <div class="links">
+      <a href="#">Forgot password?</a>
+    </div>
+
+    <div class="links">
+      Don't have an account?
+      <a href="#">Create account</a>
+    </div>
+
+    <a href="index.html" class="back">
+      ← Back to Home
+    </a>
+
+    <div class="notice">
+      Demo login page — account authentication will be connected
+      to the backend later.
+    </div>
+
+  </div>
+
+  <script>
+    function demoLogin() {
+      alert("Login functionality will be connected to the backend.");
+      return false;
+    }
+  </script>
+
+</body>
+</html>
