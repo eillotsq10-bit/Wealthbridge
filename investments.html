@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wealth Bridge — My Investments</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: #080b12;
+  color: white;
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 240px;
+  height: 100vh;
+  background: #0d111a;
+  border-right: 1px solid #1b2430;
+  padding: 25px 15px;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  padding: 0 12px 35px;
+}
+
+.logo span {
+  color: #00e6a1;
+}
+
+.menu-title {
+  color: #687386;
+  font-size: 11px;
+  margin: 0 12px 12px;
+  text-transform: uppercase;
+}
+
+.nav-item {
+  display: flex;
+  gap: 13px;
+  align-items: center;
+  padding: 13px 12px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  color: #9ba6b7;
+  text-decoration: none;
+  font-size: 14px;
+  transition: .25s;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background: #14231f;
+  color: #00e6a1;
+  transform: translateX(4px);
+}
+
+.logout {
+  position: absolute;
+  bottom: 25px;
+  left: 15px;
+  right: 15px;
+}
+
+/* MAIN */
+.main {
+  margin-left: 240px;
+  padding: 30px;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  font-size: 28px;
+  margin-bottom: 7px;
+}
+
+.header p {
+  color: #7d8999;
+  font-size: 14px;
+}
+
+.btn {
+  border: none;
+  border-radius: 9px;
+  padding: 12px 18px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: .25s;
+}
+
+.primary {
+  background: #00e6a1;
+  color: #00150e;
+}
+
+.primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,230,161,.2);
+}
+
+/* SUMMARY */
+.summary {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 18px;
+  margin-bottom: 25px;
+}
+
+.card {
+  background: linear-gradient(145deg,#10151e,#0c1017);
+  border: 1px solid #1c2632;
+  border-radius: 16px;
+  padding: 22px;
+  animation: appear .7s ease forwards;
+  opacity: 0;
+}
+
+.card:nth-child(1) { animation-delay:.1s; }
+.card:nth-child(2) { animation-delay:.2s; }
+.card:nth-child(3) { animation-delay:.3s; }
+
+@keyframes appear {
+  from {
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to {
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.card-label {
+  color:#7d8999;
+  font-size:12px;
+  margin-bottom:12px;
+}
+
+.card-value {
+  font-size:26px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.green {
+  color:#00e6a1;
+}
+
+.red {
+  color:#ff6875;
+}
+
+.card small {
+  color:#718093;
+}
+
+/* PORTFOLIO */
+.panel {
+  background:#0d121a;
+  border:1px solid #1c2632;
+  border-radius:16px;
+  padding:22px;
+  margin-bottom:22px;
+  animation: fadeUp .8s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to {
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.panel-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.panel-header h2 {
+  font-size:18px;
+}
+
+.panel-header span {
+  color:#718093;
+  font-size:12px;
+}
+
+/* INVESTMENT LIST */
+.investments {
+  display:grid;
+  gap:14px;
+}
+
+.investment {
+  background:#10161f;
+  border:1px solid #1d2935;
+  border-radius:13px;
+  padding:18px;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr auto;
+  align-items:center;
+  gap:15px;
+  transition:.3s;
+}
+
+.investment:hover {
+  transform:translateY(-3px);
+  border-color:#00a879;
+}
+
+.name {
+  font-size:15px;
+  font-weight:bold;
+}
+
+.type {
+  color:#6f7c8d;
+  font-size:11px;
+  margin-top:5px;
+}
+
+.info small {
+  display:block;
+  color:#687586;
+  font-size:11px;
+  margin-bottom:5px;
+}
+
+.info {
+  font-size:13px;
+}
+
+/* PROGRESS */
+.progress {
+  height:6px;
+  background:#202a35;
+  border-radius:10px;
+  overflow:hidden;
+  margin-top:8px;
+}
+
+.progress-bar {
+  height:100%;
+  background:#00e6a1;
+  border-radius:10px;
+  animation:grow 1.3s ease;
+}
+
+@keyframes grow {
+  from { width:0; }
+}
+
+/* BUTTON */
+.view {
+  background:#151d27;
+  border:1px solid #273442;
+  color:white;
+  padding:9px 13px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:.25s;
+}
+
+.view:hover {
+  border-color:#00e6a1;
+  color:#00e6a1;
+}
+
+/* EMPTY MESSAGE */
+.notice {
+  background:#10161f;
+  border:1px solid #1d2935;
+  border-radius:12px;
+  padding:17px;
+  color:#8793a3;
+  font-size:13px;
+  line-height:1.6;
+}
+
+/* MOBILE */
+@media(max-width:900px) {
+
+  .sidebar {
+    display:none;
+  }
+
+  .main {
+    margin-left:0;
+    padding:20px 15px;
+  }
+
+  .summary {
+    grid-template-columns:1fr;
+  }
+
+  .investment {
+    grid-template-columns:1fr 1fr;
+  }
+
+}
+
+@media(max-width:550px) {
+
+  .header {
+    align-items:flex-start;
+    gap:15px;
+    flex-direction:column;
+  }
+
+  .investment {
+    grid-template-columns:1fr;
+  }
+
+  .card-value {
+    font-size:23px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+  <div class="logo">
+    Wealth <span>Bridge</span>
+  </div>
+
+  <div class="menu-title">Main Menu</div>
+
+  <a href="dashboard.html" class="nav-item">
+    <span>⌂</span>
+    Dashboard
+  </a>
+
+  <a href="investments.html" class="nav-item active">
+    <span>◈</span>
+    My Investments
+  </a>
+
+  <a href="wallet.html" class="nav-item">
+    <span>▣</span>
+    Wallet
+  </a>
+
+  <a href="transactions.html" class="nav-item">
+    <span>↔</span>
+    Transactions
+  </a>
+
+  <a href="analytics.html" class="nav-item">
+    <span>◒</span>
+    Analytics
+  </a>
+
+  <br>
+
+  <div class="menu-title">Account</div>
+
+  <a href="profile.html" class="nav-item">
+    <span>♙</span>
+    Profile
+  </a>
+
+  <a href="settings.html" class="nav-item">
+    <span>⚙</span>
+    Settings
+  </a>
+
+  <a href="support.html" class="nav-item">
+    <span>?</span>
+    Support
+  </a>
+
+  <a href="#" class="nav-item logout">
+    <span>↪</span>
+    Log Out
+  </a>
+
+</aside>
+
+
+<!-- MAIN CONTENT -->
+
+<main class="main">
+
+  <div class="header">
+
+    <div>
+      <h1>My Investments</h1>
+      <p>Track and manage your investment portfolio.</p>
+    </div>
+
+    <button class="btn primary">
+      + New Investment
+    </button>
+
+  </div>
+
+
+  <!-- SUMMARY CARDS -->
+
+  <section class="summary">
+
+    <div class="card">
+
+      <div class="card-label">
+        Total Invested
+      </div>
+
+      <div class="card-value">
+        $18,550
+      </div>
+
+      <small>
+        Capital currently invested
+      </small>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-label">
+        Current Value
+      </div>
+
+      <div class="card-value">
+        $24,580
+      </div>
+
+      <small class="green">
+        +$6,030 growth
+      </small>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-label">
+        Overall Performance
+      </div>
+
+      <div class="card-value green">
+        +14.61%
+      </div>
+
+      <small>
+        Portfolio performance
+      </small>
+
+    </div>
+
+  </section>
+
+
+  <!-- INVESTMENT PORTFOLIOS -->
+
+  <section class="panel">
+
+    <div class="panel-header">
+
+      <div>
+        <h2>Active Investments</h2>
+        <span>Your current investment positions</span>
+      </div>
+
+    </div>
+
+
+    <div class="investments">
+
+
+      <!-- INVESTMENT 1 -->
+
+      <div class="investment">
+
+        <div>
+
+          <div class="name">
+            Growth Portfolio
+          </div>
+
+          <div class="type">
+            Diversified • Long Term
+          </div>
+
+        </div>
+
+
+        <div class="info">
+
+          <small>Invested</small>
+
+          $8,500
+
+        </div>
+
+
+        <div class="info">
+
+          <small>Current Value</small>
+
+          $10,850
+
+        </div>
+
+
+        <div class="info">
+
+          <small>Performance</small>
+
+          <span class="green">
+            +27.64%
+          </span>
+
+          <div class="progress">
+            <div
+              class="progress-bar"
+              style="width:82%">
+            </div>
+          </div>
+
+        </div>
+
+
+        <button class="view">
+          View
+        </button>
+
+      </div>
+
+
+      <!-- INVESTMENT 2 -->
+
+      <div class="investment">
+
+        <div>
+
+          <div class="name">
+            Balanced Portfolio
+          </div>
+
+          <div class="type">
+            Moderate Risk
+          </div>
+
+        </div>
+
+
+        <div class="info">
+
+          <small>Invested</small>
+
+          $5,200
+
+        </div>
+
+
+        <div class="info">
+
+          <small>Current Value</small>
+
+          $6,150
+
+        </div>
+
+
+        <div class="info">
+
+          <small>Performance</small>
+
+          <span class="green">
+            +18.27%
+          </span>
+
+          <div class="progress">
+            <div
+              class="progress-bar"
+              style="width:65%">
+            </div>
+          </div>
+
+        </div>
+
+
+        <button class="view">
+          View
+        </button>
+
+      </div>
+
+
+      <!-- INVESTMENT 3 -->
+
+      <div class="investment">
+
+        <div>
+
+          <div class="name">
+            Digital Assets
+          </div>
+
+          <div class="type">
+            High Risk
+          </div>
+
+        </div>
+
+
+        <div class="info">
+
+          <small>Invested</small>
+
+          $3,850
+
+        </div>
+
+
+        <div class="info">
+
+          <small>Current Value</small>
+
+          $3,580
+
+        </div>
+
+
+        <div class="info">
+
+          <small>Performance</small>
+
+          <span class="red">
+            -7.01%
+          </span>
+
+          <div class="progress">
+            <div
+              class="progress-bar"
+              style="width:35%">
+            </div>
+          </div>
+
+        </div>
+
+
+        <button class="view">
+          View
+        </button>
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+  <!-- INFORMATION -->
+
+  <section class="panel">
+
+    <div class="panel-header">
+
+      <div>
+        <h2>Investment Information</h2>
+        <span>Important portfolio information</span>
+      </div>
+
+    </div>
+
+    <div class="notice">
+
+      Investment values can rise or fall and past performance does
+      not guarantee future results. Portfolio figures displayed on
+      this front-end page are placeholders until the platform is
+      connected to a secure backend and real account data.
+
+    </div>
+
+  </section>
+
+</main>
+
+</body>
+</html>
